@@ -1,20 +1,3 @@
-# Intro (19.02.2020)
-
-![image-20200219084335631](webpr_notes.assets/image-20200219084335631.png)
-
-## Quiz
-
-http://86.119.37.112:9090
-Matrikel Nr & key
-Plan: 11 points per week
-Passing threshold: 60%  
-
-Key: **543**
-
----
-
----
-
 # Functions
 
 ```js
@@ -112,15 +95,37 @@ Hat viele Properties, window zb. zeigt auf sich selber.
 
 # Canvas
 
-![image-20200226084047052](webpr_notes.assets/image-20200226084047052.png)
+```javascript
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
+
+context.fillStyle = "black";
+context.fillRect(0, 0, canvas.width, canvas.height);
+```
+
+
 
 ### Key Events
 
-![image-20200226084106475](webpr_notes.assets/image-20200226084106475.png)
+```javascript
+const rightArrow = 39;
+const leftArrow = 37;
+
+window.onkeydown = ev => {
+    (ev.keyCode === rightArrow) ? ... : ...;
+}
+```
+
+
 
 ### Game Loop
 
-![image-20200226084118424](webpr_notes.assets/image-20200226084118424.png)
+```javascript
+setInterval(() => {
+    nextBoard();
+    display(context);
+}, 1000 / 5) // 5 times per second
+```
 
 
 
@@ -520,7 +525,7 @@ from their keys to their values.
 
 ## Prototype
 
-![image-20200401094935627](C:\Users\lucaf_000\AppData\Roaming\Typora\typora-user-images\image-20200401094935627.png)
+![image-20200408083112748](webpr_notes.assets/image-20200408083112748.png)
 
 Alle Students bekommen *die selbe Instanz* von Protoype!
 
@@ -537,5 +542,236 @@ And since prototype is an object, it can be modified and extended
 
 => this looks like inheritance...
 
+# Javascript Moves
 
+## Function Composition
+
+```javascript
+const compose = f => g => x => f(g(x));
+
+const plusOne = x => x+1;
+const timeTwo = x => x*2;
+
+const plus1Times2 = compose(plusOne)(timesTwo); //composed Function => returns composed function
+```
+
+
+
+_ is a valid JS variable name!
+Used for list of arguments that aren't used.
+
+
+
+## Opening Debugger 
+
+`debugger` simply opens the debugger (without ;)
+Only gets open and halts the program when developer console is open!
+
+
+
+## Moves:
+
+1. **Explore**
+
+   > Technical feasibility,
+   > hypotheses, border cases
+   > The goal is to learn and verify,
+   > delete when finished
+   >
+   > Give yourself a timebox  
+
+2. **Start at the End**
+
+   > Make static "sketch" of the result
+   > before adding dynamic features
+   > (FITYMI)
+   >
+   > 1 b) dynamic sketches,
+   >
+   > e.g. all JS, CSS in a single HTML file  
+
+3. **Extract**
+
+   > Replace static values with variables
+   > Replace repetitions with
+   > mappings and loops.  
+
+4. **Abstract**
+
+   >Discover the concept behind what you
+   >have extracted. Give it a name.
+   >It should work for itself and in
+   >combination.
+   >Revert if you cannot find one.  
+
+5. **Reorganize**
+
+   >Organize and re-factor to make your
+   >future work easier.
+   >Facilitate extensions or improvements.
+   >Prepare for release.  
+
+6. **Release**
+
+   > The solution must stand on its own
+   > without tacit knowledge or external
+   > help.
+   > Tests, documentation, examples.
+   > Before every push to the repository.  
+
+7. **Retrospective**
+
+   > What to keep?
+   > What to try differently next time?  
+
+
+
+
+
+# MVC
+
+```javascript
+//Array deconstruction
+let [a, b] = [1, 2]
+
+let obj = {a:0, b:1}
+const printme = ({a, b, d="xxx"}) => console.log(a, b, d);
+//Reihenfolge des Aufrufs nun egal inkl. default wert
+//=>
+printme(obj); //0-1-"xxx"
+
+```
+
+![image-20200422090515137](webpr_notes.assets/image-20200422090515137.png)
+
+Template Method Pattern
+
+
+
+# Async
+
+```javascript
+//Spread Operator
+const [a, ...b] = [1, 2, 3]; //a = 1, b = [2, 3]
+const constructed = [7, ...b]; //[7, 2, 3]
+
+const obj1 = {a:1, b:2};
+{c:3, ...obj1} //{c:3, a:1, b:2}
+
+const getObj = () => obj1;
+const newObj = {getObj} //key not needed if key===value
+//=> newObj = {getObj: function}
+```
+
+![image-20200429100443799](webpr_notes.assets/image-20200429100443799.png)
+
+![image-20200429100450712](webpr_notes.assets/image-20200429100450712.png)
+
+![image-20200429100506980](webpr_notes.assets/image-20200429100506980.png)
+
+**async/await ist syntax sugar for .then(...)**
+
+
+
+# Regex
+
+Used to match, replace, split (part of) strings
+
+```javascript
+//How to built a regexp literal
+new RegExp("abc");
+
+const pattern = /abc/i; //i => ignores case
+document.writeln("Ich kenne das abc!".match(pattern)) 
+//returns match => abc, null if no match
+
+const pattern2 = /\w+\s+\w+/i; //Matches first two words seperated by spaces
+
+/[abc]/ //character class accppting only a b or c
+/[^abc]/ // character class acppepting everytging except a b and c
+
+const pattern33 = /(\w+)\s+\1/ig; // Reference to forst group with \1!
+//global match with /g at end => flags
+
+"Ich kenne kenne das das ABC".replace(pattern3, "$1") //replaces all matched sections with group
+//Returns String without double words!
+
+"Ich kenne kenne das das ABC".split(pattern3) 
+// => [Ich ,kenne,das, ABC!]
+
+
+
+```
+
+# Modules
+
+### Why?
+
+Organize Code, Clear Dependencies, avoid error: Globals, scoping, Namespace
+
+
+
+ES6 Modules are not:
+
+- Packages (those have versions)
+- Dependencies, Libraries, Releases
+- Units of publication
+- Objects
+
+
+
+A module is code that:
+
+- Uses  "import" or "export"
+- imports or exports modules
+
+
+
+**Modules are async**
+
+![image-20200520092711974](webpr_notes.assets/image-20200520092711974.png)
+
+Import Variants
+
+```javascript
+import "module-name"; //*
+import defaultExport from "module-name";
+import * as name from "module-name";
+import { export } from "module-name";
+import { export as alias } from "module-name";
+import { export1 , export2 } from "module-name"; //*
+var promise = import("module-name");
+```
+
+Export Variants
+
+```javascript
+export { name1, name2, …, nameN }; //*
+export function FunctionName(){...}
+export const name1, name2, …, nameN; //or let
+export class ClassName {...}
+export default expression;
+export { name1 as default, … };
+export * from …;
+export { name1, name2, …, nameN } from …;
+```
+
+
+
+### Impacts
+
+implicit "use strict"
+
+All exports are READ-Only
+
+no Global object, "this", hoisting
+
+implicit defer mode => document.writeln is no longer useful
+
+
+
+Modules are:
+
+- Namespaces
+- Singletons
 
