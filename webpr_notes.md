@@ -1,3 +1,7 @@
+[TOC]
+
+
+
 # Functions
 
 ```js
@@ -464,7 +468,7 @@ Sets the prototype
 
 # Classes
 
-#### JS Goodie: Create Array from 0 to N
+## JS Goodie: Create Array from 0 to N
 
 ```js
 Array.from("Hallo"); takes string and makes "char" array
