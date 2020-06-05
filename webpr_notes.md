@@ -1,7 +1,3 @@
-[TOC]
-
-
-
 # Functions
 
 ```js
